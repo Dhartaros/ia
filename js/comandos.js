@@ -2,6 +2,7 @@ var commandsList =
 	[
 		{ "command":"ayuda", "description":"Muestra todos los comandos disponibles" },
 		{ "command":"clear", "description":"Limpia la terminal" },
+		{ "command":"cruza()", "description":"Realiza la cruza de dos puntos de las inversiones" },
 		{ "command":"funcionAptitud()", "description":"Calcula la función de aptitud" },
 		{ "command":"hacerInversiones()", "description":"Genera las inversiones aleatoriamente" },
 		{ "command":"representacionBinaria()", "description":"Muestra la representación binaria de la inversión" },
@@ -20,9 +21,17 @@ var showHelp = function() {
 };
 var showBinario = function() {
 	var mensajes = $("#mensajes");
-	var texto = "Representación binaria: [" + inversionesBin + "]<br>";
+	var texto = "Representación binaria: [";
+
+	for (i in inversiones)
+			texto = texto + "[" + inversionesBin[i] + "]";
+		texto = texto + "]<br>";
 	
 	mensajes.append(texto);
+};
+var showCruza = function() {
+	cruza();
+	showBinario();
 };
 var showInversiones = function(modificar) {
 	var mensajes = $("#mensajes");
@@ -56,7 +65,7 @@ $(document).ready(function() {
 	comando.keydown(function(event) {
 		/* Act on the event */
 		if(event.keyCode == 13) {
-			var input = "Error. Command not recognized. Type 'help' to see all available commands.";
+			var input = "Error. Comando no reconocido. Ingresa 'ayuda' para ver todos los  comandos disponibles.";
 			if (comando.val() == "hacerInversiones()") {
 				showInversiones(true)
 				input = "";
@@ -79,6 +88,10 @@ $(document).ready(function() {
 				$("#mensajes").empty();
 				comando.val("")
 				return;
+			}
+			else if (comando.val() == "cruza()") {
+				showCruza();
+				input = "";
 			}
 			input = input + "<br>";
 			$("#mensajes").append(input);

@@ -1,6 +1,6 @@
-var inversiones = [[],[],[],[],[]];
-var inversionesBin = [[],[],[],[],[]];
-var beneficiosPorInversion = [[],[],[],[],[]];
+var inversiones = [];
+var inversionesBin = [];
+var beneficiosPorInversion = [];
 var beneficios = 
 	[
 		{
@@ -187,15 +187,46 @@ var decToBin = function(dec) {
 		(dec >>> 0).toString(2);
 	return bin;
 };
+/* cruza() realiza la cruza de dos puntos y lo guarda en los arreglos de inversiones */
+var cruza = function() {
+	for (i in inversionesBin) {
+		/* Inicialización de probabilidades */
+		var probabilidadCruza = Math.random();
+		var probabilidadMutacion = Math.random();
+		/* Intento de cruza de los primeros padres */
+		if (probabilidadCruza <= 0.8) {
+			var subP1S1 = inversionesBin[i][0].substr(0,1);
+			var subP1S2 = inversionesBin[i][0].substr(1,2);
+			var subP1S3 = inversionesBin[i][0].substr(3);
+			var subP2S1 = inversionesBin[i][1].substr(0,1);
+			var subP2S2 = inversionesBin[i][1].substr(1,2);
+			var subP2S3 = inversionesBin[i][1].substr(3);
 
-var cruzaDosPuntos = function() {
+			inversionesBin[i][0] = subP1S1 + subP2S2 + subP1S3;
+			inversionesBin[i][1] = subP2S1 + subP1S2 + subP2S3;
+		}
+		/* Intento de cruza de los padres restantes */
+		probabilidadCruza = Math.random();
+		probabilidadMutacion = Math.random();
+		if (probabilidadCruza <= 0.8) {
+			subP1S1 = inversionesBin[i][2].substr(0,1);
+			subP1S2 = inversionesBin[i][2].substr(1,2);
+			subP1S3 = inversionesBin[i][2].substr(3);
+			subP2S1 = inversionesBin[i][3].substr(0,1);
+			subP2S2 = inversionesBin[i][3].substr(1,2);
+			subP2S3 = inversionesBin[i][3].substr(3);
 
+			inversionesBin[i][2] = subP1S1 + subP2S2 + subP1S3;
+			inversionesBin[i][3] = subP2S1 + subP1S2 + subP2S3;
+		}
+	}
 };
-
 /* hacerInversiones() inserta en la variable inversiones cuatro números al azar entre 1 y 10 */
 var hacerInversiones = function() {
 	var i, j;
-	for(i = 0; i < 5; i++) {
+	for(i = 0; i < 50; i++) {
+		inversiones[i] = [];
+		inversionesBin[i] = [];
 		for (j = 0; j < 4; j++) {
 			inversiones[i][j] = Math.floor((Math.random() * 10) + 1);
 			inversionesBin[i][j] = decToBin(inversiones[i][j]);
@@ -217,6 +248,7 @@ var funcionAptitud = function() {
 		*/
 		var sumaBeneficios = 0;
 		var sumaInversiones = 0;
+		beneficiosPorInversion[i] = [];
 		for (var j in inversiones[i]){
 			var inversion = inversiones[i][j];
 			var beneficio = parseFloat(beneficios[inversion - 1].beneficios[j].beneficio);
