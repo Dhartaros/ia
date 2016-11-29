@@ -192,7 +192,7 @@ var cruza = function() {
 	for (i in inversionesBin) {
 		/* Inicialización de probabilidades */
 		var probabilidadCruza = Math.random();
-		var probabilidadMutacion = Math.random();
+		var probabilidadMutacion = 0;
 		/* Intento de cruza de los primeros padres */
 		if (probabilidadCruza <= 0.8) {
 			var subP1S1 = inversionesBin[i][0].substr(0,1);
@@ -204,6 +204,14 @@ var cruza = function() {
 
 			inversionesBin[i][0] = subP1S1 + subP2S2 + subP1S3;
 			inversionesBin[i][1] = subP2S1 + subP1S2 + subP2S3;
+
+			var probabilidadMutacion = Math.random();
+			if (probabilidadMutacion <= 0.01)
+				mutacion(i);
+			probabilidadMutacion = Math.random();
+			if (probabilidadMutacion <= 0.01) {
+
+			}
 		}
 		/* Intento de cruza de los padres restantes */
 		probabilidadCruza = Math.random();
@@ -221,6 +229,36 @@ var cruza = function() {
 		}
 	}
 };
+/* mutacion() intercambia las posiciones de los caracteres */
+var mutacion = function(indice) {
+	var posicionInicial = Math.floor((Math.random() * 8));
+	var posicionFinal = posicionInicial;
+	do {
+		posicionFinal = Math.floor((Math.random() * 8));
+	} while(posicionFinal == posicionInicial);
+	/* Si el caracter se moverá a una posición que esté más adelante */
+	if (posicionFinal > posicionInicial) {
+		for (var i = posicionInicial; i < 4; i++) {
+			if ((i+1) == 4 || i == posicionFinal)
+				break;
+			var aux = inversionesBin[indice][0].charAt(i);
+			/* Se invierten los caracteres */
+			inversionesBin[indice][0].charAt(i) = inversionesBin[indice][0].charAt(i+1);
+			inversionesBin[indice][0].charAt(i+1) = aux;
+		}
+	}
+	/* Si el caracter se moverá a una posición que esté más atrás */
+	else {
+		for (var i = posicionInicial; i >= 0; i--) {
+			if ((i-1) < 0 || i == posicionFinal)
+				break;
+			var aux = inversionesBin[indice][0].charAt(i);
+			/* Se invierten los caracteres */
+			inversionesBin[indice][0].charAt(i) = inversionesBin[indice][0].charAt(i-1);
+			inversionesBin[indice][0].charAt(i-1) = aux;
+		}	
+	}
+}
 /* hacerInversiones() inserta en la variable inversiones cuatro números al azar entre 1 y 10 */
 var hacerInversiones = function() {
 	var i, j;
