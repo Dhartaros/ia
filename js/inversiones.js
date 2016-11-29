@@ -186,15 +186,23 @@ var decToBin = function(dec) {
 		(dec >>> 0).toString(2);
 	return bin;
 };
+
+var cruzaDosPuntos = function() {
+
+};
+
 /* hacerInversiones() inserta en la variable inversiones cuatro números al azar entre 1 y 10 */
 var hacerInversiones = function() {
 	for(var i = 0; i < 4; i++) {
 		inversiones[i] = Math.floor((Math.random() * 10) + 1);
 		inversionesBin[i] = decToBin(inversiones[i]);
 	}
+	return inversiones;
 };
 /* funcionAptitud() regresa la función de aptitud de la inversión */
 var funcionAptitud = function() {
+	if (inversiones.length == 0)
+		hacerInversiones();
 	var sumaBeneficios = 0;
 	var sumaInversiones = 0;
 	for (var i in inversiones) {

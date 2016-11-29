@@ -4,9 +4,18 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Proyecto IA</title>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" href='css/styles.css'>
 </head>
 <body>
+	<div id="mensajes">
+		<p>Ingresa el comando 'ayuda' para ver los comandos disponibles.</p>
+	</div>
+	<footer>
+		<code class=command>></code>
+		<input id="comando" type="text" value="" onblur="this.focus()" autofocus>
+	</footer>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/comandos.js"></script>
 	<script src="js/inversiones.js"></script>
 </body>
 </html>

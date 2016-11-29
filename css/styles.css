@@ -1,0 +1,38 @@
+body, input, input[type="text"] {
+	background: #000;
+	font-family: 'PT Mono', monospace;
+	color: #417505;
+}
+input[type="text"] {
+	border: none;
+	width: 90%;
+}
+input:focus {
+	outline: none;
+}
+.header {
+	text-align: center;
+}
+.header p {
+	line-height: 0;
+}
+.header ~ * {
+	margin-left: 1em;
+}
+.consola {
+	position: absolute;
+	bottom: 0px;
+}
+code.command {
+	font-weight: bold; 
+	white-space: pre;
+	display: inline-block;
+	margin: 6px 6px 6px 0;
+	padding: 12px 12px 12px 0;
+	border-style: solid;
+	border-width: thin;
+	border-color: black;
+}
+#mensajes * {
+	margin-top: 1em;
+}
