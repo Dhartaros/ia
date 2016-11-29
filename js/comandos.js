@@ -4,6 +4,7 @@ var commandsList =
 		{ "command":"clear", "description":"Limpia la terminal" },
 		{ "command":"funcionAptitud()", "description":"Calcula la función de aptitud" },
 		{ "command":"hacerInversiones()", "description":"Genera las inversiones aleatoriamente" },
+		{ "command":"representacionBinaria()", "description":"Muestra la representación binaria de la inversión" },
 		{ "command":"start", "description":"Start the GUI to see everything even better" }
 	];
 var showHelp = function() {
@@ -25,19 +26,29 @@ var showBinario = function() {
 };
 var showInversiones = function(modificar) {
 	var mensajes = $("#mensajes");
-	var texto = "";
-	if (!modificar)
-		texto = "Inversiones: [" + inversiones + "]<br>";
-	else
-		texto = "Inversiones: [" + hacerInversiones() + "]<br>";
-	
+	if (!modificar) {
+		var texto = "Inversiones: [";
+		for (i in inversiones)
+			texto = texto + "[" + inversiones[i] + "]";
+		texto = texto + "]<br>";
+	}
+	else {
+		hacerInversiones();
+		showInversiones(false);
+	}
 	mensajes.append(texto);
 };
 var showFuncionAptitud = function() {
 	var mensajes = $("#mensajes");
-	var texto = "La función de aptitud de la inversión es " + funcionAptitud();
-	
+	var texto = "Beneficios: [";
+
+	funcionAptitud();
+
 	showInversiones(false);
+	for (b in beneficiosPorInversion)
+		texto = texto + "[" + beneficiosPorInversion[b] + "]";
+	texto = texto + "]<br>"
+
 	mensajes.append(texto);
 };
 $(document).ready(function() {

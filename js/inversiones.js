@@ -1,5 +1,6 @@
-var inversiones = [];
-var inversionesBin = [];
+var inversiones = [[],[],[],[],[]];
+var inversionesBin = [[],[],[],[],[]];
+var beneficiosPorInversion = [[],[],[],[],[]];
 var beneficios = 
 	[
 		{
@@ -193,9 +194,12 @@ var cruzaDosPuntos = function() {
 
 /* hacerInversiones() inserta en la variable inversiones cuatro números al azar entre 1 y 10 */
 var hacerInversiones = function() {
-	for(var i = 0; i < 4; i++) {
-		inversiones[i] = Math.floor((Math.random() * 10) + 1);
-		inversionesBin[i] = decToBin(inversiones[i]);
+	var i, j;
+	for(i = 0; i < 5; i++) {
+		for (j = 0; j < 4; j++) {
+			inversiones[i][j] = Math.floor((Math.random() * 10) + 1);
+			inversionesBin[i][j] = decToBin(inversiones[i][j]);
+		}
 	}
 	return inversiones;
 };
@@ -203,8 +207,6 @@ var hacerInversiones = function() {
 var funcionAptitud = function() {
 	if (inversiones.length == 0)
 		hacerInversiones();
-	var sumaBeneficios = 0;
-	var sumaInversiones = 0;
 	for (var i in inversiones) {
 		/* 
 			La variable inversión toma el valor de la inversión para usarla como índice de beneficios,
@@ -213,10 +215,15 @@ var funcionAptitud = function() {
 
 			De ahí se van sumando los valores para poder regresar la función de aptitud.
 		*/
-		var inversion = inversiones[i];
-		var beneficio = parseFloat(beneficios[inversion - 1].beneficios[i].beneficio);
-		sumaBeneficios = sumaBeneficios + beneficio;
-		sumaInversiones = sumaInversiones + inversion;
+		var sumaBeneficios = 0;
+		var sumaInversiones = 0;
+		for (var j in inversiones[i]){
+			var inversion = inversiones[i][j];
+			var beneficio = parseFloat(beneficios[inversion - 1].beneficios[j].beneficio);
+			sumaBeneficios = sumaBeneficios + beneficio;
+			sumaInversiones = sumaInversiones + inversion;
+		}
+		var beneficio = sumaBeneficios / (500 * (Math.abs(sumaInversiones - 10) + 1));
+		beneficiosPorInversion[i] = beneficio;	
 	}
-	return sumaBeneficios / (500 * (Math.abs(sumaInversiones - 10) + 1));
 };
